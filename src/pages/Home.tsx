@@ -8,7 +8,7 @@ function Home() {
                 <Button><Link to="/log-in">Log in</Link></Button> 
                 <Button><Link to="/sign-up">Sign up</Link></Button>
             </div>
-            <h1>What can I help with?</h1>
+            <h1 className='text-red-500'>What can I help with?</h1>
             <div>
             <Input type="text" placeholder="Ask anything"/><Button>Send</Button>
             </div>
