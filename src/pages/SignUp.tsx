@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { SignUpForm } from '@/components/ui/signup-form';
 
 function SignUp() {
     return (
-        <div>
-            <h1>Welcome to My English Learning App</h1>
-        </div>
+       <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+             <div className="w-full max-w-sm">
+               <SignUpForm />
+             </div>
+           </div>
     );
 }
 
