@@ -53,7 +53,6 @@ export const useGetVocabulary = () => {
     try {
       const response = await getVocabulary();
       setVocabulary(response);
-      console.log(response);
     } catch (error) {
       toast.error(`Failed to get vocabulary: ${error}`, {
         position: 'bottom-left',
