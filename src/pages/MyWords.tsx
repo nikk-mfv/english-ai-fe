@@ -1,7 +1,7 @@
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CreateVocabPopover } from '@/containers/my-words/create-vocab-popover';
+import { DeleteVocab } from '@/containers/my-words/delete-vocab';
+import { VocabDetail } from '@/containers/my-words/vocab-detail';
 import { useGetVocabulary } from '@/hooks/use-vocabulary';
-import { Terminal } from 'lucide-react';
 
 function MyWords() {
   const { vocabulary, handleGetVocabulary } = useGetVocabulary();
@@ -21,16 +21,16 @@ function MyWords() {
       ) : (
         <div className='flex flex-col gap-4'>
           {vocabulary.map((word) => (
-            <Alert key={word.name}>
-              <Terminal className='h-4 w-4' />
-              <AlertTitle>{word.name}</AlertTitle>
-              <AlertDescription>
-                <div>
-                  <p>{word.definition}</p>
-                  <p>{word.pronunciation}</p>
-                </div>
-              </AlertDescription>
-            </Alert>
+            <VocabDetail
+              key={word.name}
+              vocabulary={word}
+              refetchVocabulary={handleGetVocabulary}
+            >
+              <DeleteVocab
+                vocabulary={word}
+                refetchVocabulary={handleGetVocabulary}
+              />
+            </VocabDetail>
           ))}
         </div>
       )}
