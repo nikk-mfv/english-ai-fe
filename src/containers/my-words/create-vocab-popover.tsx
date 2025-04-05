@@ -27,8 +27,8 @@ export function CreateVocabPopover({
     await handleCreateVocabulary();
     handleGetVocabulary();
   };
-
   return (
+ 
     <Popover>
       <PopoverTrigger asChild>
         <Button>Create new vocabulary</Button>
