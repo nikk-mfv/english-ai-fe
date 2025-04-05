@@ -1,15 +1,18 @@
 import { axiosClient } from '@/services/axios';
 
-type Topic = {
+export interface ITopic {
     name: string;
     userId: number;
 }
 
-export function createTopic(topic: Topic){
-    axiosClient({
-        method: 'post',
-        url: '/topic',
-        data: topic
-      });
+export function createTopic (topic: ITopic) {
+    return axiosClient.post(
+        '/topic',
+        topic
+      );
 }
 
+// export const getTopics = async() => {
+//     const respone = await axiosClient.get<[ITopic]>('/topic')
+//     return respone.data
+// }

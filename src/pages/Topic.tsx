@@ -1,21 +1,22 @@
 import { Input } from "@/components/ui/input"
+import { useCreateTopic } from "@/hooks/use-topic"
 import { Button } from "@/ui/button"
-import {createTopic} from '@/services/topic'
-import { ChangeEvent, useState } from "react"
-
 
 export default function Topic() {
-  const [inputName,setinputName] = useState('');
-  
-  const handleChange = ((e: ChangeEvent<HTMLInputElement>) => setinputName(e.target.value))
-
-  const HandleClick = () => {
-    createTopic({name: inputName, userId: 1})
-  }
+  const {name, handleCreateTopic} = useCreateTopic()
   return(
   <div>
-    <Input type="text" placeholder="name" value={inputName} onChange={handleChange}/>
-    <Button onClick={HandleClick}>Create</Button>
+    <Input type="text" placeholder="topic name" value={name}/>
+    <Button onClick={handleCreateTopic}>Create</Button>
+
+    {/* <div>{topics.map((topic) => {
+      return <p key={topic.name}>{topic.name}</p>
+    })}
+    </div> */}
   </div>)
 }
+    
+    
+  
+  
   

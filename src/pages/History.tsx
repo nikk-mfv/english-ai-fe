@@ -15,6 +15,7 @@ function History() {
     return (
         <>
         <NavBar/>
+        
         <div className="flex flex-col justify-center items-center">
             <h1 className="p-10 text-2xl font-medium m-4">History</h1>
             {history.map((dayHistory,index) => (
