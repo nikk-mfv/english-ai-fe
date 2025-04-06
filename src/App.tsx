@@ -8,7 +8,9 @@ function App() {
     <>
       <div className='App h-screen'>
         <Header />
-        <AppRoutes />
+        <div className='mt-26'>
+          <AppRoutes />
+        </div>
       </div>
       <Toaster />
     </>

@@ -5,7 +5,7 @@ import { NavBar } from './navbar';
 export function Header() {
   const navigate = useNavigate();
   return (
-    <div className='flex justify-between items-center border-b-2 border-gray-300 shadow-md px-2 mb-4'>
+    <div className='flex justify-between items-center border-b-2 border-gray-300 shadow-md px-2 fixed top-0 left-0 right-0 bg-white'>
       <img
         onClick={() => navigate('/')}
         src={logo}
