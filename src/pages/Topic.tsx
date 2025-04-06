@@ -1,10 +1,9 @@
-import { CreateTopic } from "@/containers/topic/create-topic"
+import { CreateTopic } from "@/containers/topic/create-topic";
 
 export default function Topic() {
-  return(<CreateTopic/>)
+  return (
+    <div>
+      <CreateTopic />
+    </div>
+  );
 }
-    
-    
-  
-  
-  

@@ -5,6 +5,10 @@ export interface ITopic {
   userId: number;
 }
 
-export function CreateTopic<ITopic>(topic: ITopic) {
+export function createTopic<ITopic>(topic: ITopic) {
   return axiosClient.post("/topic", topic);
+}
+
+export function getTopics() {
+  return axiosClient.get("/topic");
 }
