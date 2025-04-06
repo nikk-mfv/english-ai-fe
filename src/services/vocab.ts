@@ -1,4 +1,4 @@
-import { axiosClient } from '@/services/axios';
+import { axiosClient } from "@/services/axios";
 
 export interface IVocabulary {
   iD: number;
@@ -11,14 +11,14 @@ export interface IVocabulary {
 }
 
 export const createVocabulary = async (
-  vocabulary: Pick<IVocabulary, 'name' | 'definition' | 'pronunciation'>
+  vocabulary: Pick<IVocabulary, "name" | "definition" | "pronunciation">
 ) => {
-  const response = await axiosClient.post('/vocab', vocabulary);
+  const response = await axiosClient.post("/vocab", vocabulary);
   return response.data;
 };
 
 export const getVocabulary = async () => {
-  const response = await axiosClient.get<IVocabulary[]>('/vocab');
+  const response = await axiosClient.get<IVocabulary[]>("/vocab");
   return response.data;
 };
 
@@ -29,7 +29,7 @@ export const deleteVocabulary = async (id: number) => {
 
 export const updateVocabulary = async (
   id: number,
-  vocabulary: Pick<IVocabulary, 'name' | 'definition' | 'pronunciation'>
+  vocabulary: Pick<IVocabulary, "name" | "definition" | "pronunciation">
 ) => {
   const response = await axiosClient.put(`/vocab/${id}`, vocabulary);
   return response.data;
