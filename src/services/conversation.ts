@@ -1,17 +1,17 @@
 import { axiosClient } from './axios';
 
 interface IMessage {
-  iD: string;
+  iD: number;
   message: string;
-  userId: Date;
-  conversationId: string;
+  userId: number;
+  conversationId: number;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt: Date | null;
 }
 
 interface IUser {
-  iD: string;
+  iD: number;
   username: string;
   email: string;
   createdAt?: Date;
@@ -19,7 +19,7 @@ interface IUser {
 }
 
 export interface IConversation {
-  iD: string;
+  iD: number;
   name: string;
   createdAt: Date;
   updatedAt: Date;
