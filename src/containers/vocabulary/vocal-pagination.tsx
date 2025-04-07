@@ -54,8 +54,12 @@ export function VocabularyPagination({
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <Button variant='outline' onClick={handlePrevious}>
-            {'<'}
+          <Button
+            disabled={page === 1}
+            variant='outline'
+            onClick={handlePrevious}
+          >
+            {'< Previous'}
           </Button>
         </PaginationItem>
         <Select value={page.toString()} onValueChange={handlePageChange}>
@@ -73,8 +77,12 @@ export function VocabularyPagination({
           </SelectContent>
         </Select>
         <PaginationItem>
-          <Button variant='outline' onClick={handleNext}>
-            {'>'}
+          <Button
+            disabled={page === totalPages}
+            variant='outline'
+            onClick={handleNext}
+          >
+            {'Next >'}
           </Button>
         </PaginationItem>
       </PaginationContent>
