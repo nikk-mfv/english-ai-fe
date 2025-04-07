@@ -1,4 +1,4 @@
-import { axiosClient } from './axios';
+import { axiosClient } from "./axios";
 
 interface IMessage {
   iD: number;
@@ -30,10 +30,10 @@ export interface IConversation {
 }
 
 export const createConversation = async (
-  conversation: Pick<IConversation, 'name' | 'userId'>
+  conversation: Pick<IConversation, "name" | "userId">
 ) => {
   return axiosClient.post<{ data: IConversation }>(
-    '/conversation',
+    "/conversation",
     conversation
   );
 };
