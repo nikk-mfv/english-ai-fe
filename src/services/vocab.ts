@@ -17,8 +17,13 @@ export const createVocabulary = async (
   return response.data;
 };
 
-export const getVocabulary = async () => {
-  const response = await axiosClient.get<IVocabulary[]>('/vocab');
+export const getVocabulary = async (page: number) => {
+  const response = await axiosClient.get<{
+    data: IVocabulary[];
+    paging: {
+      total: number;
+    };
+  }>(`/vocab?page=${page}`);
   return response.data;
 };
 
