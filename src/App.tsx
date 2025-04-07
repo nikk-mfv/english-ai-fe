@@ -8,7 +8,7 @@ function App() {
     <>
       <div className='App h-screen'>
         <Header />
-        <div className='mt-26'>
+        <div className='pt-26'>
           <AppRoutes />
         </div>
       </div>

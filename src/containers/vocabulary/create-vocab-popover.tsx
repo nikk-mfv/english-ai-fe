@@ -1,15 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
 import { useCreateVocabulary } from '@/hooks/use-vocabulary';
 import { IVocabulary } from '@/services/vocab';
 import { toast } from 'sonner';
@@ -46,61 +34,63 @@ export function CreateVocabPopover({
     }
   };
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button>Create Vocabulary</Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Create Vocabulary</SheetTitle>
-          <SheetDescription>
-            Create a new vocabulary to your profile here. Click save when you're
-            done.
-          </SheetDescription>
-        </SheetHeader>
-        <div className='grid gap-4 py-4 px-4'>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='name' className='text-right'>
-              Name
-            </Label>
-            <Input
-              id='name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className='col-span-3'
-            />
-          </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='definition' className='text-right'>
-              Definition
-            </Label>
-            <Input
-              id='definition'
-              value={definition}
-              onChange={(e) => setDefinition(e.target.value)}
-              className='col-span-3'
-            />
-          </div>
+    <>
+      <button
+        className='btn'
+        onClick={() => {
+          const modal = document.getElementById(
+            'create-vocabulary-modal'
+          ) as HTMLDialogElement;
+          if (modal) {
+            modal.showModal();
+          }
+        }}
+      >
+        Create Vocabulary
+      </button>
+      <dialog id='create-vocabulary-modal' className='modal'>
+        <div className='modal-box'>
+          <h3 className='font-bold text-lg'>Create Vocabulary</h3>
+          <div className='py-4'>
+            <fieldset className='fieldset'>
+              <legend className='fieldset-legend'>Name</legend>
+              <input
+                type='text'
+                className='input input-neutral'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </fieldset>
+            <fieldset className='fieldset'>
+              <legend className='fieldset-legend'>Definition</legend>
+              <input
+                type='text'
+                className='input input-neutral'
+                value={definition}
+                onChange={(e) => setDefinition(e.target.value)}
+              />
+            </fieldset>
 
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='pronunciation' className='text-right'>
-              Pronun
-            </Label>
-            <Input
-              id='pronunciation'
-              value={pronunciation}
-              onChange={(e) => setPronunciation(e.target.value)}
-              className='col-span-3'
-            />
+            <fieldset className='fieldset'>
+              <legend className='fieldset-legend'>Pronunciation</legend>
+              <input
+                type='text'
+                className='input input-neutral'
+                value={pronunciation}
+                onChange={(e) => setPronunciation(e.target.value)}
+              />
+            </fieldset>
           </div>
-
-          <SheetClose asChild>
-            <Button type='submit' onClick={createVocabulary}>
-              Save changes
-            </Button>
-          </SheetClose>
+          <div className='modal-action'>
+            <form method='dialog'>
+              {/* if there is a button in form, it will close the modal */}
+              <button className='btn' onClick={createVocabulary}>
+                Create
+              </button>
+            </form>
+          </div>
         </div>
-      </SheetContent>
-    </Sheet>
+      </dialog>
+    </>
   );
 }

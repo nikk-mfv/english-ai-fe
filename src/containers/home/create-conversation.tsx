@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { useCreateConversation } from '@/hooks/use-conversation';
 import { MessageCircleMore } from 'lucide-react';
 import { memo, useEffect } from 'react';
@@ -36,10 +35,10 @@ export const CreateConversation = memo(() => {
   }, [conversation, navigate]);
 
   return (
-    <Button variant='outline' onClick={submit}>
+    <button className='btn' onClick={submit}>
       New Conversation
       <MessageCircleMore />
-    </Button>
+    </button>
   );
 });
 

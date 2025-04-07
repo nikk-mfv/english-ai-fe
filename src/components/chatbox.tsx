@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Mic } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -55,13 +54,13 @@ export function ChatBox() {
           <fieldset disabled={browserSupportsSpeechRecognition}>
             <Mic onClick={clickMicrophone} className='cursor-pointer' />
           </fieldset>
-          <Button
-            className='self-end'
+          <button
+            className='self-end btn btn-neutral'
             type='submit'
             disabled={!textInput.trim()}
           >
             Send
-          </Button>
+          </button>
         </div>
       </form>
     </div>

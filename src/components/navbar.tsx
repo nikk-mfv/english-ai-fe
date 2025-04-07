@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,24 +38,22 @@ export function NavBar() {
         <>
           <div className='absolute top-0 right-0 p-4 flex gap-1'>
             <Link to='/log-in'>
-              <Button className='hover:cursor-pointer'>Log in</Button>{' '}
+              <button className='btn'>Log in</button>
             </Link>
             <Link to='/sign-up'>
-              <Button className='bg-white text-black border-2 hover:bg-gray-100 hover:cursor-pointer'>
-                Sign up
-              </Button>
+              <button className='btn'>Sign up</button>
             </Link>
           </div>
         </>
       ) : (
         <>
           <div className='flex gap-1'>
-            <NavigationMenu>
+            <NavigationMenu className='flex gap-x-2'>
               <Link to='/history'>
-                <Button variant='ghost'>History</Button>
+                <button className='btn'>History</button>
               </Link>
               <Link to='/vocabulary'>
-                <Button variant='ghost'>My Words</Button>
+                <button className='btn'>My Words</button>
               </Link>
             </NavigationMenu>
             <DropdownMenu>
