@@ -1,12 +1,16 @@
 import { Toaster } from '@/components/ui/sonner';
 import './App.css';
+import { Header } from './components/header';
 import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
     <>
       <div className='App h-screen'>
-        <AppRoutes />
+        <Header />
+        <div className='pt-26'>
+          <AppRoutes />
+        </div>
       </div>
       <Toaster />
     </>

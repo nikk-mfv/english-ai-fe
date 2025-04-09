@@ -14,25 +14,11 @@ export const useCreateVocabulary = () => {
   const [pronunciation, setPronunciation] = useState('');
 
   const handleCreateVocabulary = async () => {
-    try {
-      await createVocabulary({
-        name: name,
-        definition: definition,
-        pronunciation: pronunciation,
-      });
-
-      toast('Vocabulary created successfully', {
-        description: `${name} has been created`,
-        position: 'bottom-left',
-      });
-      setName('');
-      setDefinition('');
-      setPronunciation('');
-    } catch (error) {
-      toast.error(`Failed to create vocabulary: ${error}`, {
-        position: 'bottom-left',
-      });
-    }
+    return createVocabulary({
+      name: name,
+      definition: definition,
+      pronunciation: pronunciation,
+    });
   };
 
   return {
@@ -48,11 +34,13 @@ export const useCreateVocabulary = () => {
 
 export const useGetVocabulary = () => {
   const [vocabulary, setVocabulary] = useState<IVocabulary[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
 
-  const handleGetVocabulary = async () => {
+  const handleGetVocabulary = async (page?: number) => {
     try {
-      const response = await getVocabulary();
-      setVocabulary(response);
+      const response = await getVocabulary(page || 1);
+      setVocabulary(response.data);
+      setTotalPages(response.paging.total);
     } catch (error) {
       toast.error(`Failed to get vocabulary: ${error}`, {
         position: 'bottom-left',
@@ -61,12 +49,14 @@ export const useGetVocabulary = () => {
   };
 
   useEffect(() => {
-    handleGetVocabulary();
+    handleGetVocabulary(1);
   }, []);
 
   return {
     vocabulary,
+    totalPages,
     handleGetVocabulary,
+    setVocabulary,
   };
 };
 

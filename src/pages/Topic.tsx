@@ -1,6 +1,7 @@
 import { CreateTopic } from "@/containers/topic/create-topic";
 import { TopicDetail } from "@/containers/topic/topic-detail";
 import { useGetTopics } from "@/hooks/use-topic";
+import {Pagination} from "@/components/pagination"
 
 export default function Topic() {
   const { topics, handleGetTopics } = useGetTopics();
@@ -18,6 +19,7 @@ export default function Topic() {
           ))}
         </div>
       )}
+      <Pagination/>
     </div>
   );
 }

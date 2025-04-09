@@ -4,9 +4,9 @@ import Conversation from '@/pages/Conversation';
 import History from '@/pages/History';
 import Home from '@/pages/Home';
 import LogIn from '@/pages/LogIn';
-import Vocabulary from '@/pages/Vocabulary';
 import SignUp from '@/pages/SignUp';
-import Topic from '@/pages/Topic'
+import Topic from '@/pages/Topic';
+import Vocabulary from '@/pages/Vocabulary';
 
 const AppRoutes = () => {
   return (
