@@ -1,7 +1,7 @@
 import { CreateTopic } from "@/containers/topic/create-topic";
 import { TopicDetail } from "@/containers/topic/topic-detail";
 import { useGetTopics } from "@/hooks/use-topic";
-import { Pagination } from "@/components/pagination"
+import { Pagination } from "@/components/pagination";
 
 export default function Topic() {
   const { topics, handleGetTopics } = useGetTopics();
@@ -10,6 +10,7 @@ export default function Topic() {
       <CreateTopic handleGetTopics={handleGetTopics} />
 
       <h1 className="text-2xl font-bold m-4">Topic List</h1>
+      
       {topics.length === 0 ? (
         <div className="text-xl font-semibold m-4">No topic has found</div>
       ) : (
@@ -18,9 +19,9 @@ export default function Topic() {
             <TopicDetail key={topic.name} topic={topic}></TopicDetail>
           ))}
         </div>
-        
       )}
-      <Pagination/>
+
+      <Pagination />
     </div>
   );
 }
