@@ -13,11 +13,23 @@ function Vocabulary() {
     setVocabulary((old) => [...old, vocabulary]);
   };
 
+  const handleRemoveVocabulary = (vocabulary: IVocabulary) => {
+    setVocabulary((old) => old.filter((word) => word.iD !== vocabulary.iD));
+  };
+
+  const handleEditVocabulary = (vocabulary: IVocabulary) => {
+    setVocabulary((old) =>
+      old.map((word) => (word.iD === vocabulary.iD ? vocabulary : word))
+    );
+  };
+
   return (
     <div className='flex flex-col gap-4 mx-auto max-w-4xl p-4'>
-      <h1 className='text-2xl font-bold'>You vocabulary</h1>
+      <h1 className='text-2xl font-bold'>Your vocabulary</h1>
 
-      <CreateVocabPopover addVocabulary={handleAddMoreVocabulary} />
+      <div>
+        <CreateVocabPopover addVocabulary={handleAddMoreVocabulary} />
+      </div>
 
       {totalPages > 1 && (
         <VocabularyPagination
@@ -38,7 +50,8 @@ function Vocabulary() {
             <VocabDetail
               key={word.name}
               vocabulary={word}
-              refetchVocabulary={handleGetVocabulary}
+              removeVocabulary={handleRemoveVocabulary}
+              editVocabulary={handleEditVocabulary}
             >
               <>
                 <DeleteVocab

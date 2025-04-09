@@ -1,8 +1,5 @@
 import { useCreateTopic } from "@/hooks/use-topic";
 
-import { Input } from "@/ui/input";
-import { Button } from "@/ui/button";
-
 export function CreateTopic({
   handleGetTopics,
 }: {
@@ -22,15 +19,15 @@ export function CreateTopic({
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="text-2xl font-bold p-5">Create your new topic</h1>
         <div className="max-w-sx">
-          <Input
+          <input
             id="name"
             value={name}
             className="w-full mb-2"
             onChange={(e) => setName(e.target.value)}
           />
-          <Button className="w-full" onClick={createTopic}>
+          <button className="btn btn-primary" onClick={createTopic}>
             Create
-          </Button>
+          </button>
         </div>
       </div>
     </div>

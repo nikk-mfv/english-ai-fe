@@ -1,17 +1,3 @@
-import { Button } from '@/components/ui/button';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from '@/components/ui/pagination';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { useMemo, useState } from 'react';
 
 type VocabularyPaginationProps = {
@@ -43,49 +29,23 @@ export function VocabularyPagination({
     }
   };
 
-  const handlePageChange = (page: string) => {
-    setPage(parseInt(page));
-    if (onChange) {
-      onChange(parseInt(page));
-    }
-  };
-
   return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <Button
-            disabled={page === 1}
-            variant='outline'
-            onClick={handlePrevious}
-          >
-            {'< Previous'}
-          </Button>
-        </PaginationItem>
-        <Select value={page.toString()} onValueChange={handlePageChange}>
-          <SelectTrigger className='w-auto'>
-            <SelectValue placeholder='Page' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <SelectItem key={i} value={(i + 1).toString()}>
-                  {i + 1}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <PaginationItem>
-          <Button
-            disabled={page === totalPages}
-            variant='outline'
-            onClick={handleNext}
-          >
-            {'Next >'}
-          </Button>
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    <div className='join'>
+      <button
+        disabled={page === 1}
+        className='join-item btn'
+        onClick={handlePrevious}
+      >
+        «
+      </button>
+      <button className='join-item btn'>Page {page}</button>
+      <button
+        disabled={page === totalPages}
+        className='join-item btn'
+        onClick={handleNext}
+      >
+        »
+      </button>
+    </div>
   );
 }

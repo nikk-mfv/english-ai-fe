@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { useDeleteVocabulary } from '@/hooks/use-vocabulary';
 import { IVocabulary } from '@/services/vocab';
 
@@ -20,9 +19,9 @@ export function DeleteVocab({
 
   return (
     <div>
-      <Button size='sm' variant='destructive' onClick={submit}>
+      <button className='btn btn-error btn-soft btn-xs' onClick={submit}>
         Delete
-      </Button>
+      </button>
     </div>
   );
 }
