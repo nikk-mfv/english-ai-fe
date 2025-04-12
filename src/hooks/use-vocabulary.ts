@@ -39,7 +39,7 @@ export const useGetVocabulary = () => {
   const handleGetVocabulary = async (page?: number) => {
     try {
       const response = await getVocabulary(page || 1);
-      setVocabulary(response.data);
+      setVocabulary(response.data || []);
       setTotalPages(response.paging.total);
     } catch (error) {
       toast.error(`Failed to get vocabulary: ${error}`, {
