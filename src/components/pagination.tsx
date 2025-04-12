@@ -7,12 +7,9 @@ type PaginationProps = {
 
 export function Pagination({ total, onChange }: PaginationProps) {
   const [page, setPage] = useState(1);
-  
-  const pageSize = 10
-  const totalPages = useMemo(
-    () => Math.ceil(total / pageSize),
-    [total]
-  );
+
+  const pageSize = 10;
+  const totalPages = useMemo(() => Math.ceil(total / pageSize), [total]);
 
   const handlePrev = () => {
     if (page === 1) return;
@@ -29,7 +26,7 @@ export function Pagination({ total, onChange }: PaginationProps) {
     setPage(currentPage);
     if (onChange) onChange(page + 1);
   };
-  console.log("total:", total, "page:", page, "totalPages:", totalPages);
+
   return (
     <div className="join flex justify-center m-3">
       <button
