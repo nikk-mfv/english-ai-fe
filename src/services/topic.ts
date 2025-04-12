@@ -12,9 +12,9 @@ export function createTopic(topic: Pick<ITopic, "name" | "userId">) {
 
 export function getTopics(page: number) {
   return axiosClient.get<{
-    data: ITopic[],
+    data: ITopic[];
     paging: {
-      total: number,
-    }
+      total: number;
+    };
   }>(`/topic?page=${page}`);
 }

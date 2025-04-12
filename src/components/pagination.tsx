@@ -11,11 +11,11 @@ export function Pagination({ total, onChange }: PaginationProps) {
   const pageSize = 10
   const totalPages = useMemo(
     () => Math.ceil(total / pageSize),
-    [total, pageSize]
+    [total]
   );
 
   const handlePrev = () => {
-    if (page == 1) return;
+    if (page === 1) return;
 
     const currentPage = page - 1;
     setPage(currentPage);
@@ -23,17 +23,17 @@ export function Pagination({ total, onChange }: PaginationProps) {
   };
 
   const handleNext = () => {
-    if (page == totalPages) return;
+    if (page === totalPages) return;
 
     const currentPage = page + 1;
     setPage(currentPage);
     if (onChange) onChange(page + 1);
   };
-
+  console.log("total:", total, "page:", page, "totalPages:", totalPages);
   return (
     <div className="join flex justify-center m-3">
       <button
-        disabled={page == 1}
+        disabled={page === 1}
         className="join-item btn"
         onClick={handlePrev}
       >
@@ -41,7 +41,7 @@ export function Pagination({ total, onChange }: PaginationProps) {
       </button>
       <button className="join-item btn">Page {page}</button>
       <button
-        disabled={page == totalPages}
+        disabled={page === totalPages && totalPages <= pageSize}
         className="join-item btn"
         onClick={handleNext}
       >

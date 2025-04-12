@@ -55,6 +55,9 @@ export function NavBar() {
               <Link to='/vocabulary'>
                 <button className='btn'>My Words</button>
               </Link>
+              <Link to='/topic'>
+                <button className='btn'>Topic</button>
+              </Link>
             </NavigationMenu>
             <DropdownMenu>
               <DropdownMenuTrigger>
