@@ -4,7 +4,7 @@ import { useGetTopics } from "@/hooks/use-topic";
 import { Pagination } from "@/components/pagination";
 
 export default function Topic() {
-  const { topics, totalPages, handleGetTopics } = useGetTopics();
+  const { topics,totalTopics, handleGetTopics } = useGetTopics();
 
   return (
     <div>
@@ -15,13 +15,13 @@ export default function Topic() {
         <div className="text-xl font-semibold m-4 text-center">No topic has found</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 m-4">
-          {topics.map((topic) => (
-            <TopicDetail key={topic.name} topic={topic} />
+          {topics.map(topic => (
+            <TopicDetail key={topic.iD} topic={topic} />
           ))}
         </div>
       )}
 
-      <Pagination totalPages={totalPages} onChange={handleGetTopics} />
+      <Pagination total={totalTopics} onChange={handleGetTopics} />
     </div>
   );
 }

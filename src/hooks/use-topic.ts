@@ -1,5 +1,5 @@
 import { createTopic, getTopics, ITopic } from "@/services/topic";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 export const useCreateTopic = () => {
@@ -7,7 +7,7 @@ export const useCreateTopic = () => {
 
   const handleCreateTopic = async () => {
     try {
-      await createTopic({ name: name, userId: 1 });
+      await createTopic({name: name, userId: 1 });
       toast(`New topic create successfully`, {
         position: "bottom-left",
       });
@@ -24,14 +24,12 @@ export const useCreateTopic = () => {
 export function useGetTopics() {
   const [topics, setTopics] = useState<ITopic[]>([]);
   const [totalTopics, setTotalTopics] = useState(0);
-  const [size, setSize] = useState(0);
 
   const handleGetTopics = async (page?: number) => {
     try {
       const response = await getTopics(page || 1);
       setTopics(response.data.data);
-      setTotalTopics(response.data.totalItems);
-      setSize(response.data.size);
+      setTotalTopics(response.data.paging.total);
     } catch (error) {
       toast.error(`Failed get topics: ${error}`, {
         position: "bottom-left",
@@ -43,10 +41,5 @@ export function useGetTopics() {
     handleGetTopics(1);
   }, []);
 
-  const totalPages = useMemo(
-    () => Math.ceil(totalTopics / size),
-    [totalTopics, size]
-  );
-
-  return { topics, totalTopics, totalPages, handleGetTopics };
+  return { topics, totalTopics, handleGetTopics };
 }

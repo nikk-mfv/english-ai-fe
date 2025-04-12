@@ -1,21 +1,24 @@
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useState, useMemo } from "react";
 
 type PaginationProps = {
-  totalPages: number;
+  total: number;
   onChange?: (page: number) => void;
 };
 
-export function Pagination({ totalPages, onChange }: PaginationProps) {
+export function Pagination({ total, onChange }: PaginationProps) {
   const [page, setPage] = useState(1);
-  const navigate = useNavigate();
+  
+  const pageSize = 10
+  const totalPages = useMemo(
+    () => Math.ceil(total / pageSize),
+    [total, pageSize]
+  );
 
   const handlePrev = () => {
     if (page == 1) return;
 
     const currentPage = page - 1;
     setPage(currentPage);
-    navigate(`?page=${currentPage}`);
     if (onChange) onChange(page - 1);
   };
 
@@ -24,7 +27,6 @@ export function Pagination({ totalPages, onChange }: PaginationProps) {
 
     const currentPage = page + 1;
     setPage(currentPage);
-    navigate(`?page=${currentPage}`);
     if (onChange) onChange(page + 1);
   };
 
