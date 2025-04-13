@@ -1,6 +1,7 @@
 import { IMessage } from "@/services/conversation";
 import { FC } from "react";
 import { format } from "date-fns";
+import Markdown from 'react-markdown'
 
 type Prop = {
   messages: IMessage[];
@@ -22,7 +23,7 @@ export const MessageList: FC<Prop> = ({ messages }) => {
                   {format(new Date(item.createdAt as Date), "dd/MM/yyyy HH:mm")}
                 </time>
               </div>
-              <div className="chat-bubble">{item.message}</div>
+              <div className="chat-bubble"><Markdown>{item.message}</Markdown></div>
             </div>
           ) : (
             <div className="chat chat-end">
@@ -32,7 +33,7 @@ export const MessageList: FC<Prop> = ({ messages }) => {
                   {format(new Date(item.createdAt as Date), "dd/MM/yyyy HH:mm")}
                 </time>
               </div>
-              <div className="chat-bubble">{item.message}</div>
+              <div className="chat-bubble"><Markdown>{item.message}</Markdown></div>
             </div>
           )}
         </div>
