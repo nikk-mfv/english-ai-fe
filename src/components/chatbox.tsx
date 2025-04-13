@@ -18,7 +18,7 @@ type Prop = {
 export function ChatBox({ conversationId }: Prop) {
   const { handleSubmit } = useForm<ChatInput>();
   const [textInput, setTextInput] = useState("");
-  const { messages, sendMessage } = useMessage();
+  const { messages, sendMessage, isLoading } = useMessage();
 
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
@@ -71,6 +71,8 @@ export function ChatBox({ conversationId }: Prop) {
             type="submit"
             disabled={!textInput.trim()}
           >
+            {isLoading && (<span className="loading loading-spinner" />)}
+            
             Send
           </button>
         </div>

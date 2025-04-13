@@ -3,9 +3,11 @@ import { useState } from "react";
 
 export const useMessage = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendMessage = async (message: string, conversationId: number) => {
     try {
+      setIsLoading(true)
       const res = await createMessage(message, conversationId);
 
       const newMessages: IMessage[] = [
@@ -25,11 +27,14 @@ export const useMessage = () => {
       setMessages([...messages, ...newMessages]);
     } catch (error) {
         throw new Error('error')
+    } finally {
+      setIsLoading(false)
     }
   };
 
   return {
     messages,
+    isLoading,
     sendMessage,    
   }
 };
