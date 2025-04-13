@@ -7,7 +7,7 @@ export const useCreateTopic = () => {
 
   const handleCreateTopic = async () => {
     try {
-      await createTopic({ name: name, userId: 1 });
+      await createTopic({name: name, userId: 1 });
       toast(`New topic create successfully`, {
         position: "bottom-left",
       });
@@ -23,20 +23,23 @@ export const useCreateTopic = () => {
 
 export function useGetTopics() {
   const [topics, setTopics] = useState<ITopic[]>([]);
+  const [totalTopics, setTotalTopics] = useState(0);
 
-  const handleGetTopics = async () => {
+  const handleGetTopics = async (page?: number) => {
     try {
-      const response = await getTopics();
-      setTopics(response.data);
+      const response = await getTopics(page || 1);
+      setTopics(response.data.data);
+      setTotalTopics(response.data.paging.total);
     } catch (error) {
       toast.error(`Failed get topics: ${error}`, {
         position: "bottom-left",
       });
     }
   };
+
   useEffect(() => {
-    handleGetTopics();
+    handleGetTopics(1);
   }, []);
 
-  return { topics, handleGetTopics };
+  return { topics, totalTopics, handleGetTopics };
 }

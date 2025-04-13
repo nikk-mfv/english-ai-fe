@@ -4,14 +4,14 @@ import {
   getVocabulary,
   IVocabulary,
   updateVocabulary,
-} from '@/services/vocab';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+} from "@/services/vocab";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export const useCreateVocabulary = () => {
-  const [name, setName] = useState('');
-  const [definition, setDefinition] = useState('');
-  const [pronunciation, setPronunciation] = useState('');
+  const [name, setName] = useState("");
+  const [definition, setDefinition] = useState("");
+  const [pronunciation, setPronunciation] = useState("");
 
   const handleCreateVocabulary = async () => {
     return createVocabulary({
@@ -39,11 +39,11 @@ export const useGetVocabulary = () => {
   const handleGetVocabulary = async (page?: number) => {
     try {
       const response = await getVocabulary(page || 1);
-      setVocabulary(response.data);
+      setVocabulary(response.data || []);
       setTotalPages(response.paging.total);
     } catch (error) {
       toast.error(`Failed to get vocabulary: ${error}`, {
-        position: 'bottom-left',
+        position: "bottom-left",
       });
     }
   };
@@ -64,12 +64,12 @@ export const useDeleteVocabulary = () => {
   const handleDeleteVocabulary = async (id: number) => {
     try {
       await deleteVocabulary(id);
-      toast('Vocabulary deleted successfully', {
-        position: 'bottom-left',
+      toast("Vocabulary deleted successfully", {
+        position: "bottom-left",
       });
     } catch (error) {
       toast.error(`Failed to delete vocabulary: ${error}`, {
-        position: 'bottom-left',
+        position: "bottom-left",
       });
     }
   };
@@ -82,16 +82,16 @@ export const useDeleteVocabulary = () => {
 export const useUpdateVocabulary = () => {
   const handleUpdateVocabulary = async (
     id: number,
-    vocabulary: Pick<IVocabulary, 'name' | 'definition' | 'pronunciation'>
+    vocabulary: Pick<IVocabulary, "name" | "definition" | "pronunciation">
   ) => {
     try {
       await updateVocabulary(id, vocabulary);
-      toast('Vocabulary updated successfully', {
-        position: 'bottom-left',
+      toast("Vocabulary updated successfully", {
+        position: "bottom-left",
       });
     } catch (error) {
       toast.error(`Failed to update vocabulary: ${error}`, {
-        position: 'bottom-left',
+        position: "bottom-left",
       });
     }
   };

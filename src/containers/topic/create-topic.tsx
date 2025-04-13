@@ -22,10 +22,11 @@ export function CreateTopic({
           <input
             id="name"
             value={name}
-            className="w-full mb-2"
+            placeholder="Type here"
+            className="w-full mb-2 p-3 input"
             onChange={(e) => setName(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={createTopic}>
+          <button className="btn w-full" onClick={createTopic}>
             Create
           </button>
         </div>
