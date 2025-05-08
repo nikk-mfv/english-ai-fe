@@ -12,7 +12,7 @@ export function Translate(text: string) {
     },
     data: [
       {
-        text: text,
+        text
       },
     ],
     headers: {
