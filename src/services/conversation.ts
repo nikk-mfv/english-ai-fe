@@ -1,13 +1,14 @@
 import { axiosClient } from "./axios";
 
-interface IMessage {
+export interface IMessage {
   iD: number;
   message: string;
   userId: number;
   conversationId: number;
   createdAt?: Date;
   updatedAt?: Date;
-  deletedAt: Date | null;
+  deletedAt?: Date | null;
+  isHuman: boolean;
 }
 
 interface IUser {
@@ -36,4 +37,11 @@ export const createConversation = async (
     "/conversation",
     conversation
   );
+};
+
+export const createMessage = async (
+  message: string,
+  conversationId: number
+) => {
+  return axiosClient.post<{data: IMessage}>("/message", { message, conversationId });
 };
