@@ -1,38 +1,45 @@
+import { getAllConversation, IConversation } from "@/services/conversation";
+import { MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 function History() {
-  const history: Array<Record<string, Record<string, string>>> = [
-    {
-      '09-03-2025': {
-        conversation1: 'abc',
-        conversation2: 'xyz',
-      },
-      '08-03-2025': {
-        conversation1: 'wcs',
-        conversation2: 'ýeaq',
-      },
-    },
-  ];
+  const [conversation, setConversation] = useState<IConversation[]>([]);
+
+  const navigate = useNavigate()
+
+  const handleGetAllConversation = async () => {
+    const { data } = await getAllConversation();
+    setConversation(data.data);
+  };
+
+  useEffect(() => {
+    handleGetAllConversation();
+  }, []);
+
+  if (!conversation || conversation.length === 0) return <>Chưa có lịch sử trò chuyện !!!</>;
+
   return (
-    <>
-      <div className='flex flex-col justify-center items-center'>
-        <h1 className='p-10 text-2xl font-medium m-4'>History</h1>
-        {history.map((dayHistory, index) => (
-          <div key={index}>
-            {Object.keys(dayHistory).map((day, dayIndex) => (
-              <div className='border-2 p-2 m-2 rounded-lg' key={dayIndex}>
-                <h2 className='font-medium'>{day}</h2>
-                {Object.entries(dayHistory[day]).map(
-                  ([key, value], conversationIndex) => (
-                    <p className='pl-3' key={conversationIndex}>
-                      {key}: {value}
-                    </p>
-                  )
-                )}
+    <div className="w-[700px] mx-auto">
+      <h2 className="text-2xl font-bold ">Lịch sử trò chuyện</h2>
+
+      <ul className="list bg-base-100 rounded-box shadow-md">
+        {conversation.map((item, index) => (
+          <li className="list-row" key={item.iD}>
+            <div className="text-4xl font-thin opacity-30 tabular-nums">{index + 1}</div>
+            <div className="list-col-grow">
+              <div>{item.name}</div>
+              <div className="text-xs uppercase font-semibold opacity-60">
+                {new Date(item.createdAt).toDateString()}
               </div>
-            ))}
-          </div>
+            </div>
+            <button onClick={() => navigate(`/conversation/${item.iD}`)} className="btn btn-square btn-ghost">
+              <MessageCircle />
+            </button>
+          </li>
         ))}
-      </div>
-    </>
+      </ul>
+    </div>
   );
 }
 

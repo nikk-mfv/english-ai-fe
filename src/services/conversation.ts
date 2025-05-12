@@ -43,5 +43,12 @@ export const createMessage = async (
   message: string,
   conversationId: number
 ) => {
-  return axiosClient.post<{data: IMessage}>("/message", { message, conversationId });
+  return axiosClient.post<{ data: IMessage }>("/message", {
+    message,
+    conversationId,
+  });
+};
+
+export const getAllConversation = async() => {
+  return axiosClient.get<{ data: IConversation[] }>("/conversation");
 };
