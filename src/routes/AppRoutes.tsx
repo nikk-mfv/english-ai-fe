@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Conversation from '@/pages/Conversation';
 import History from '@/pages/History';
 import Home from '@/pages/Home';
 import LogIn from '@/pages/LogIn';
 import SignUp from '@/pages/SignUp';
 import Topic from '@/pages/Topic';
 import Vocabulary from '@/pages/Vocabulary';
+import Conversation from  '@/pages/conversation'
 
 const AppRoutes = () => {
   return (
