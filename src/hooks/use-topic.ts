@@ -1,4 +1,4 @@
-import { createTopic, getTopics, ITopic } from "@/services/topic";
+import { createTopic, getTopics, ITopic, updateTopic } from "@/services/topic";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -7,7 +7,7 @@ export const useCreateTopic = () => {
 
   const handleCreateTopic = async () => {
     try {
-      await createTopic({name: name, userId: 1 });
+      await createTopic({ name: name, userId: 1 }); //TODO: get userId from auth
       toast(`New topic create successfully`, {
         position: "bottom-left",
       });
@@ -41,5 +41,22 @@ export function useGetTopics() {
     handleGetTopics(1);
   }, []);
 
-  return { topics, totalTopics, handleGetTopics };
+  return { topics, totalTopics, handleGetTopics, setTopics };
 }
+
+export const useUpdateTopic = () => {
+  const handleUpdateTopic = async (id: number, topic: Pick<ITopic, "name">) => {
+    try {
+      await updateTopic(id, topic);
+      toast(`Topic updated successfully`, {
+        position: "bottom-left",
+      });
+    } catch (error) {
+      toast.error(`Failed to update topic: ${error}`, {
+        position: "bottom-left",
+      });
+    }
+  };
+
+  return { handleUpdateTopic };
+};
