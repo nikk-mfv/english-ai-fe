@@ -77,6 +77,9 @@ importers:
       zod:
         specifier: ^3.25.0-canary.20250211T214501
         version: 3.25.0-canary.20250211T214501
+      zustand:
+        specifier: ^5.0.4
+        version: 5.0.4(@types/react@18.3.20)(react@18.3.1)
     devDependencies:
       '@eslint/js':
         specifier: ^9.21.0
@@ -2457,6 +2460,24 @@ packages:
   zod@3.25.0-canary.20250211T214501:
     resolution: {integrity: sha512-f+H1qsk7u1MLA7NjHFb3XAZVdeq+OwDo9M+XqTzZpfzZU2iApAErVIwTfZ6dPBOqm0fZuUUzKhTwGtUaPp+4/A==}
 
+  zustand@5.0.4:
+    resolution: {integrity: sha512-39VFTN5InDtMd28ZhjLyuTnlytDr9HfwO512Ai4I8ZABCoyAj4F1+sr7sD1jP/+p7k77Iko0Pb5NhgBFDCX0kQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
+
 snapshots:
 
   '@ampproject/remapping@2.3.0':
@@ -4758,3 +4779,8 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   zod@3.25.0-canary.20250211T214501: {}
+
+  zustand@5.0.4(@types/react@18.3.20)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 18.3.20
+      react: 18.3.1

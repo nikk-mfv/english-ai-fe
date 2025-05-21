@@ -1,9 +1,12 @@
 import {
   useDeleteVocabulary,
   useUpdateVocabulary,
-} from '@/hooks/use-vocabulary';
-import { IVocabulary } from '@/services/vocab';
-import { useState } from 'react';
+  useCreateVocabulary,
+} from "@/hooks/use-vocabulary";
+import { IVocabulary } from "@/services/vocab";
+import { useState, useEffect } from "react";
+import { MultiSelect } from "@/components/ui/multiSelect";
+import { useGetTopics } from "@/hooks/use-topic";
 
 type VocabularyProps = {
   vocabulary: IVocabulary;
@@ -18,9 +21,23 @@ export function VocabDetail({
   editVocabulary,
 }: VocabularyProps) {
   const [newVocabulary, setNewVocabulary] = useState<IVocabulary>(vocabulary);
+
   const { handleUpdateVocabulary } = useUpdateVocabulary();
   const { handleDeleteVocabulary } = useDeleteVocabulary();
   const [isEditing, setIsEditing] = useState(false);
+
+  const [selectedTopicIds, setSelectedTopicIds] = useState<number[]>(
+    vocabulary.topicIds && vocabulary.topicIds.length > 0
+      ? vocabulary.topicIds
+      : vocabulary.topics?.map((t) => t.iD) || []
+  );
+  const { topics } = useGetTopics();
+
+  const { setTopicIds } = useCreateVocabulary();
+
+  useEffect(() => {
+    setTopicIds(selectedTopicIds);
+  }, [selectedTopicIds, setTopicIds]);
 
   const cancelEdit = () => {
     setIsEditing(false);
@@ -28,13 +45,19 @@ export function VocabDetail({
   };
 
   const edit = async () => {
-    await handleUpdateVocabulary(vocabulary.iD, {
-      name: newVocabulary.name,
-      definition: newVocabulary.definition,
-      pronunciation: newVocabulary.pronunciation,
-    });
+    const updatedTopics = topics.filter((topic) =>
+      selectedTopicIds.includes(topic.iD)
+    );
+
+    const updatedVocab: IVocabulary = {
+      ...newVocabulary,
+      topicIds: selectedTopicIds,
+      topics: updatedTopics,
+    };
+
+    await handleUpdateVocabulary(vocabulary.iD, updatedVocab);
     setIsEditing(false);
-    editVocabulary(newVocabulary);
+    editVocabulary(updatedVocab);
   };
 
   const handleRemoveVocabulary = async () => {
@@ -44,26 +67,26 @@ export function VocabDetail({
 
   return (
     <>
-      <div className='card w-96 bg-base-100 card-xs shadow-sm'>
-        <div className='card-body'>
+      <div className="card w-100 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div className="card-body">
           {isEditing ? (
             <>
-              <fieldset className='fieldset'>
-                <legend className='fieldset-legend'>Name</legend>
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Name</legend>
                 <input
-                  type='text'
-                  className='input input-neutral'
+                  type="text"
+                  className="input input-neutral w-full"
                   value={newVocabulary.name}
                   onChange={(e) =>
                     setNewVocabulary({ ...newVocabulary, name: e.target.value })
                   }
                 />
               </fieldset>
-              <fieldset className='fieldset'>
-                <legend className='fieldset-legend'>Definition</legend>
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Definition</legend>
                 <input
-                  type='text'
-                  className='input input-neutral'
+                  type="text"
+                  className="input input-neutral w-full"
                   value={newVocabulary.definition}
                   onChange={(e) =>
                     setNewVocabulary({
@@ -73,12 +96,25 @@ export function VocabDetail({
                   }
                 />
               </fieldset>
-
-              <fieldset className='fieldset'>
-                <legend className='fieldset-legend'>Pronunciation</legend>
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Example</legend>
                 <input
-                  type='text'
-                  className='input input-neutral'
+                  type="text"
+                  className="input input-neutral w-full"
+                  value={newVocabulary.example}
+                  onChange={(e) =>
+                    setNewVocabulary({
+                      ...newVocabulary,
+                      example: e.target.value,
+                    })
+                  }
+                />
+              </fieldset>
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Pronunciation</legend>
+                <input
+                  type="text"
+                  className="input input-neutral w-full"
                   value={newVocabulary.pronunciation}
                   onChange={(e) =>
                     setNewVocabulary({
@@ -88,28 +124,44 @@ export function VocabDetail({
                   }
                 />
               </fieldset>
+
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Topics</legend>
+                <MultiSelect
+                  options={topics.map((t) => ({
+                    label: t.name,
+                    value: t.iD,
+                  }))}
+                  selected={selectedTopicIds}
+                  setSelected={setSelectedTopicIds}
+                />
+              </fieldset>
             </>
           ) : (
             <>
-              <h2 className='card-title'>{vocabulary.name}</h2>
-
-              <p>{vocabulary.definition}</p>
-
-              <p>{vocabulary.pronunciation}</p>
+              <h2 className="card-title">{vocabulary.name}</h2>
+              <p>Definition: {vocabulary.definition}</p>
+              <p>Example: {vocabulary.example}</p>
+              <p>Pronunciation: {vocabulary.pronunciation}</p>
+              <p>
+                Topics:{" "}
+                {(newVocabulary.topics || []).map((t) => t.name).join(", ") ||
+                  "No topics"}
+              </p>
             </>
           )}
 
-          <div className='card-actions'>
+          <div className="card-actions">
             {isEditing ? (
               <>
                 <button
-                  className='btn btn-error btn-xs btn-outline'
+                  className="btn btn-error btn-xs btn-outline"
                   onClick={cancelEdit}
                 >
                   Cancel
                 </button>
                 <button
-                  className='btn btn-success btn-xs btn-outline'
+                  className="btn btn-success btn-xs btn-outline"
                   onClick={edit}
                 >
                   Save
@@ -118,14 +170,21 @@ export function VocabDetail({
             ) : (
               <>
                 <button
-                  className='btn btn-error btn-xs btn-outline'
+                  className="btn btn-error btn-xs btn-outline"
                   onClick={handleRemoveVocabulary}
                 >
                   Delete
                 </button>
                 <button
-                  className='btn btn-outline btn-xs'
-                  onClick={() => setIsEditing(true)}
+                  className="btn btn-outline btn-xs"
+                  onClick={() => {
+                    setSelectedTopicIds(
+                      vocabulary.topicIds?.length
+                        ? vocabulary.topicIds
+                        : vocabulary.topics?.map((t) => t.iD) || []
+                    );
+                    setIsEditing(true);
+                  }}
                 >
                   Edit
                 </button>

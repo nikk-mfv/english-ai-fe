@@ -1,4 +1,4 @@
-import { Translate } from "@/services/translate";
+import { translate } from "@/services/translate";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -7,9 +7,9 @@ export const useTranslate = () => {
 
   const handleTranslate = async (inputText: string) => {
     try {
-      const response = await Translate(inputText);
+      const response = await translate(inputText);
       const translated = response.data[0].translations[0].text;
-      
+
       setTranslatedText(translated);
     } catch (error) {
       console.error("Translation API error:", error);
@@ -18,5 +18,6 @@ export const useTranslate = () => {
       });
     }
   };
+
   return { translatedText, setTranslatedText, handleTranslate };
 };
