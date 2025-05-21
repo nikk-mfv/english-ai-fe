@@ -12,7 +12,11 @@ export function translate(text: string) {
     },
     data: [
       {
+<<<<<<< HEAD
         text,
+=======
+        text
+>>>>>>> 8bb4e0c4778cbfc8fb20b34c8adf895252444e29
       },
     ],
     headers: {
