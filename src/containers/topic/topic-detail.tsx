@@ -1,15 +1,18 @@
 import { ITopic } from "@/services/topic";
 import { useState } from "react";
-import { useUpdateTopic } from "@/hooks/use-topic";
+import { useUpdateTopic, useDeleteTopic } from "@/hooks/use-topic";
 type TopicProps = {
   topic: ITopic;
+  children: React.ReactNode;
+  removeTopic: (topic: ITopic) => void;
   editTopic: (topic: ITopic) => void;
 };
 
-export function TopicDetail({ topic, editTopic }: TopicProps) {
+export function TopicDetail({ topic, removeTopic, editTopic }: TopicProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTopic, setNewTopic] = useState<ITopic>(topic);
   const { handleUpdateTopic } = useUpdateTopic();
+  const { handleDeleteTopic } = useDeleteTopic();
 
   const cancelEdit = () => {
     setIsEditing(false);
@@ -17,10 +20,14 @@ export function TopicDetail({ topic, editTopic }: TopicProps) {
   };
 
   const edit = async () => {
-  
-  await handleUpdateTopic(topic.iD, newTopic);
-  editTopic(newTopic);
-  setIsEditing(false);
+    await handleUpdateTopic(topic.iD, newTopic);
+    editTopic(newTopic);
+    setIsEditing(false);
+  };
+
+  const handleRemoveTopic = async () => {
+    await handleDeleteTopic(topic.iD);
+    removeTopic(topic);
   };
 
   return (
@@ -36,7 +43,7 @@ export function TopicDetail({ topic, editTopic }: TopicProps) {
                   className="input input-neutral w-full"
                   value={newTopic.name}
                   onChange={(e) =>
-                    setNewTopic({ ...newTopic, name: e.target.value})
+                    setNewTopic({ ...newTopic, name: e.target.value })
                   }
                 />
               </fieldset>
@@ -65,7 +72,16 @@ export function TopicDetail({ topic, editTopic }: TopicProps) {
               </>
             ) : (
               <>
-                <button className="btn btn-outline btn-xs" onClick={() => setIsEditing(true)}>
+                <button
+                  className="btn btn-error btn-xs btn-outline"
+                  onClick={handleRemoveTopic}
+                >
+                  Delete
+                </button>
+                <button
+                  className="btn btn-outline btn-xs"
+                  onClick={() => setIsEditing(true)}
+                >
                   Edit
                 </button>
               </>
@@ -75,6 +91,4 @@ export function TopicDetail({ topic, editTopic }: TopicProps) {
       </div>
     </>
   );
-
-
 }
