@@ -65,8 +65,6 @@ export default function SignUpForm() {
           className="px-4 py-3 pr-10 text-base rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
           placeholder="Your password"
-          minLength={8}
-          maxLength={64}
         />
         <div
           className="absolute right-3 top-[15px] cursor-pointer text-gray-500 hover:text-gray-700"
@@ -90,8 +88,6 @@ export default function SignUpForm() {
           className="px-4 py-3 pr-10 text-base rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
           placeholder="Confirm your password"
-          minLength={8}
-          maxLength={64}
         />
         <div
           className="absolute right-3 top-[15px] cursor-pointer text-gray-500 hover:text-gray-700"
