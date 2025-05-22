@@ -1,54 +1,34 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useCreateAccount } from "@/hooks/use-user";
+import { validateUsername, validatePassword } from "@/lib/validator";
+
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmError, setConfirmError] = useState("");
-
-  const validatePassword = (password: string) => {
-    const hasUpper = /[A-Z]/.test(password);
-    const hasLower = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecial = /[^A-Za-z0-9]/.test(password);
-
-    return {
-      isValid: hasUpper && hasLower && hasNumber && hasSpecial,
-      hasUpper,
-      hasLower,
-      hasNumber,
-      hasSpecial,
-    };
-  };
 
   const { username, setUsername, password, setPassword, handleCreateAccount } =
     useCreateAccount();
 
   const handleSubmit = async () => {
-    const result = validatePassword(password);
+    const usernameMsg = validateUsername(username);
+    const passwordMsg = validatePassword(password);
+    const confirmMsg =
+      password !== confirmPassword ? "Passwords do not match." : "";
 
-    let valid = true;
+    setUsernameError(usernameMsg ?? "");
+    setPasswordError(passwordMsg ?? "");
+    setConfirmError(confirmMsg);
 
-    if (!result.isValid) {
-      setPasswordError(
-        "Password must include uppercase, lowercase, number, and special character."
-      );
-      valid = false;
-    } else {
-      setPasswordError("");
-    }
+    const isValid = !usernameMsg && !passwordMsg && !confirmMsg;
 
-    if (password !== confirmPassword) {
-      setConfirmError("Passwords do not match.");
-      valid = false;
-    } else {
-      setConfirmError("");
-    }
-
-    if (valid) {
+    if (isValid) {
       await handleCreateAccount();
     }
   };
@@ -69,14 +49,10 @@ export default function SignUpForm() {
           className="px-4 py-3 text-base rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           required
           placeholder="Your username"
-          pattern="[A-Za-z][A-Za-z0-9\-]*"
-          minLength={3}
-          maxLength={30}
-          title="Only letters, numbers or dash"
         />
-        <p className="text-sm text-gray-500 mt-1">
-          Must be 3 to 30 characters. Letters, numbers, or dash.
-        </p>
+        {usernameError && (
+          <p className="text-sm text-red-600 mt-1">{usernameError}</p>
+        )}
       </div>
 
       {/* Password */}
