@@ -4,7 +4,7 @@ import { useCreateAccount } from "@/hooks/use-user";
 import { validateUsername, validatePassword } from "@/lib/validator";
 
 
-export default function SignUpForm() {
+export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
