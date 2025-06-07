@@ -12,7 +12,7 @@ export default function Topic() {
     setTopics((old) => old.map((t) => (t.iD === topic.iD ? topic : t)));
     handleGetTopics();
   };
-  
+
   const handleRemoveTopic = async (topic: ITopic) => {
     setTopics((old) => old.filter((t) => t.iD !== topic.iD));
     handleGetTopics();

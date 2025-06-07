@@ -1,5 +1,5 @@
 import { axiosClient } from "./axios";
-
+import { IUser } from "./user";
 export interface IMessage {
   iD: number;
   message: string;
@@ -9,14 +9,6 @@ export interface IMessage {
   updatedAt?: Date;
   deletedAt?: Date | null;
   isHuman: boolean;
-}
-
-interface IUser {
-  iD: number;
-  username: string;
-  email: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface IConversation {
