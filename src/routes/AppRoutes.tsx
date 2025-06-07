@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
 import History from '@/pages/History';
 import Home from '@/pages/Home';
@@ -11,13 +11,13 @@ import Conversation from  '@/pages/conversation'
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/vocabulary' element={<Vocabulary />} />
-      <Route path='/history' element={<History />} />
-      <Route path='/conversation/:id' element={<Conversation />} />
-      <Route path='/topic' element={<Topic />} />
-      <Route path='/log-in' element={<LogIn />} />
-      <Route path='/sign-up' element={<SignUp />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/vocabulary" element={<Vocabulary />} />
+      <Route path="/history" element={<History />} />
+      <Route path="/conversation/:id" element={<Conversation />} />
+      <Route path="/topic" element={<Topic />} />
+      <Route path="/log-in" element={<LogIn />} />
+      <Route path="/sign-up" element={<SignUp />} />
     </Routes>
   );
 };

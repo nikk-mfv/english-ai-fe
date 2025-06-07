@@ -11,24 +11,32 @@ import { toast } from "sonner";
 export const useCreateVocabulary = () => {
   const [name, setName] = useState("");
   const [definition, setDefinition] = useState("");
+  const [example, setExample] = useState("");
   const [pronunciation, setPronunciation] = useState("");
+  const [topicIds, setTopicIds] = useState<number[]>([]);
 
   const handleCreateVocabulary = async () => {
     return createVocabulary({
       name: name,
       definition: definition,
+      example: example,
       pronunciation: pronunciation,
+      topicIds: topicIds || [],
     });
   };
 
   return {
     name,
     definition,
+    example,
     pronunciation,
+    topicIds,
     handleCreateVocabulary,
     setName,
     setDefinition,
+    setExample,
     setPronunciation,
+    setTopicIds,
   };
 };
 
@@ -82,7 +90,7 @@ export const useDeleteVocabulary = () => {
 export const useUpdateVocabulary = () => {
   const handleUpdateVocabulary = async (
     id: number,
-    vocabulary: Pick<IVocabulary, "name" | "definition" | "pronunciation">
+    vocabulary: Pick<IVocabulary, "name" | "definition" | "example" | "pronunciation" | "topicIds" >
   ) => {
     try {
       await updateVocabulary(id, vocabulary);
