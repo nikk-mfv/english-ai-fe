@@ -6,35 +6,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
 import { LogOut } from "lucide-react";
-import { useEffect, useState } from "react";
 import Avatar from "react-avatar";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/use-auth";
 
 export function NavBar() {
-  const [isLoggedin, setIsLoggedin] = useState(true);
+  const { user, logout } = useAuth();
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loggedIn = localStorage.getItem("isLoggedin") === "true";
-    setIsLoggedin(loggedIn);
-  }, []);
-
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userName");
-    setIsLoggedin(false);
+    logout();
     navigate("/");
-  };
-
-  localStorage.setItem("username", "Hoàng");
-  const user = {
-    name: localStorage.getItem("username") || "Guest",
-    email: "m@example.com",
   };
 
   return (
     <div>
-      {!isLoggedin ? (
+      {!user ? (
         <>
           <div className="absolute top-0 right-0 p-4 flex gap-1">
             <Link to="/log-in">
@@ -63,13 +51,13 @@ export function NavBar() {
               <DropdownMenuTrigger>
                 <Avatar
                   className="hover:cursor-pointer"
-                  name={user.name}
+                  name={user?.username || ""}
                   size="40"
                   round={true}
                 />
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded border-none"
+                className="w-[--radix-dropdown-menu-trigger-width] bg-white min-w-56 rounded border border-gray-200 shadow-lg"
                 align="start"
                 sideOffset={4}
               >

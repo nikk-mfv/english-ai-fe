@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { useGetTopics } from "@/hooks/use-topic";
 import { MultiSelect } from "@/components/ui/multiSelect";
+import axios from "axios";
 
 export function CreateVocabPopover({
   name,
@@ -32,8 +33,8 @@ export function CreateVocabPopover({
     setTopicIds,
   } = useCreateVocabulary();
 
-   useEffect(() => {
-    setTopicIds(selectedTopicIds);  
+  useEffect(() => {
+    setTopicIds(selectedTopicIds);
   }, [selectedTopicIds, setTopicIds]);
 
   const createVocabulary = async () => {
@@ -52,9 +53,15 @@ export function CreateVocabPopover({
 
       closeModal();
     } catch (error) {
-      toast.error(`Failed to create vocabulary: ${error}`, {
+      let errorMessage = "Failed to create vocabulary";
+      // check if the error is an Axios error
+      if (axios.isAxiosError(error)) {
+        errorMessage = error.response?.data?.error || error.message;
+      }
+      toast.error(errorMessage, {
         position: "bottom-left",
       });
+
       closeModal();
     }
   };
@@ -114,18 +121,18 @@ export function CreateVocabPopover({
                 onChange={(e) => setPronunciation(e.target.value)}
               />
             </fieldset>
-            
+
             <fieldset className="fieldset">
               <legend className="fieldset-legend">Topics</legend>
-            <MultiSelect
+              <MultiSelect
                 options={topics.map((t) => ({
                   label: t.name,
-                  value: t.iD, 
+                  value: t.iD,
                 }))}
                 selected={selectedTopicIds}
-                setSelected={setSelectedTopicIds} 
+                setSelected={setSelectedTopicIds}
               />
-          </fieldset>
+            </fieldset>
           </div>
           <div className="modal-action">
             <form method="dialog">

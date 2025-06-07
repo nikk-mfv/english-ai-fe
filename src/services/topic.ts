@@ -1,12 +1,10 @@
 import { axiosClient } from "@/services/axios";
-
 export interface ITopic {
   iD: number;
   name: string;
-  userId: number;
 }
 
-export function createTopic(topic: Pick<ITopic, "name" | "userId">) {
+export function createTopic(topic: Pick<ITopic, "name">) {
   return axiosClient.post("/topic", topic);
 }
 
