@@ -4,13 +4,17 @@ import { DeleteVocab } from "@/containers/vocabulary/delete-vocab";
 import { VocabDetail } from "@/containers/vocabulary/vocab-detail";
 import { useGetVocabulary } from "@/hooks/use-vocabulary";
 import { IVocabulary } from "@/services/vocab";
+import { useState } from "react";
 
 function Vocabulary() {
   const { vocabulary, setVocabulary, totalPages, handleGetVocabulary } =
     useGetVocabulary();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleAddMoreVocabulary = (vocabulary: IVocabulary) => {
-    setVocabulary((old) => [...old, vocabulary]);
+    setVocabulary((old) => [vocabulary, ...old]);
+    handleGetVocabulary();
   };
 
   const handleRemoveVocabulary = (vocabulary: IVocabulary) => {
@@ -22,15 +26,28 @@ function Vocabulary() {
       old.map((word) => (word.iD === vocabulary.iD ? vocabulary : word))
     );
   };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className="flex flex-col gap-4 mx-auto max-w-4xl p-4">
-      <h1 className="text-2xl font-bold">Your vocabulary</h1>
+      <h1 className="text-2xl font-bold text-center">Your vocabulary</h1>
 
-      <div>
-        <CreateVocabPopover addVocabulary={handleAddMoreVocabulary} />
+      <div className="flex justify-center">
+        <button className="btn" onClick={openModal}>
+          Add Vocabulary
+        </button>
       </div>
 
-      <Pagination total={totalPages} onChange={handleGetVocabulary} />
+      {isModalOpen && (
+        <CreateVocabPopover
+          addVocabulary={(vocab) => {
+            handleAddMoreVocabulary(vocab);
+          }}
+          closeModal={closeModal}
+        />
+      )}
 
       {vocabulary.length === 0 ? (
         <div className="flex flex-col gap-4">
@@ -39,24 +56,27 @@ function Vocabulary() {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          {vocabulary.map((word) => (
-            <VocabDetail
-              key={word.name}
-              vocabulary={word}
-              removeVocabulary={handleRemoveVocabulary}
-              editVocabulary={handleEditVocabulary}
-            >
-              <>
-                <DeleteVocab
-                  vocabulary={word}
-                  refetchVocabulary={handleGetVocabulary}
-                />
-              </>
-            </VocabDetail>
-          ))}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {vocabulary.map((word) => (
+              <VocabDetail
+                key={word.iD}
+                vocabulary={word}
+                removeVocabulary={handleRemoveVocabulary}
+                editVocabulary={handleEditVocabulary}
+              >
+                <>
+                  <DeleteVocab
+                    vocabulary={word}
+                    refetchVocabulary={handleGetVocabulary}
+                  />
+                </>
+              </VocabDetail>
+            ))}
+          </div>
         </div>
       )}
+      <Pagination total={totalPages} onChange={handleGetVocabulary} />
     </div>
   );
 }
