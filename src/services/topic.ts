@@ -19,9 +19,10 @@ export function getTopics(page: number) {
   }>(`/topic?page=${page}`);
 }
 
-export function updateTopic(
-  id: number,
-  topic: Pick<ITopic, "name">
-) {
+export function updateTopic(id: number, topic: Pick<ITopic, "name">) {
   return axiosClient.put(`/topic/${id}`, topic);
+}
+
+export function deleteTopic(id: number) {
+  return axiosClient.delete(`/topic/${id}`);
 }

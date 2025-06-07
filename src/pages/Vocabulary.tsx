@@ -1,10 +1,10 @@
 import { Pagination } from "@/components/pagination";
 import { CreateVocabPopover } from "@/containers/vocabulary/create-vocab-popover";
-import { DeleteVocab } from "@/containers/vocabulary/delete-vocab";
 import { VocabDetail } from "@/containers/vocabulary/vocab-detail";
-import { useGetVocabulary } from "@/hooks/use-vocabulary";
+import { useGetVocabulary, useDeleteVocabulary } from "@/hooks/use-vocabulary";
 import { IVocabulary } from "@/services/vocab";
 import { useState } from "react";
+import { Delete } from "@/components/delete";
 
 function Vocabulary() {
   const { vocabulary, setVocabulary, totalPages, handleGetVocabulary } =
@@ -26,6 +26,8 @@ function Vocabulary() {
       old.map((word) => (word.iD === vocabulary.iD ? vocabulary : word))
     );
   };
+
+  const { handleDeleteVocabulary } = useDeleteVocabulary();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -66,9 +68,10 @@ function Vocabulary() {
                 editVocabulary={handleEditVocabulary}
               >
                 <>
-                  <DeleteVocab
-                    vocabulary={word}
-                    refetchVocabulary={handleGetVocabulary}
+                  <Delete<IVocabulary>
+                    object={word}
+                    refetch={handleGetVocabulary}
+                    handleDelete={handleDeleteVocabulary}
                   />
                 </>
               </VocabDetail>

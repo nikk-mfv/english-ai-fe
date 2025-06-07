@@ -1,8 +1,9 @@
 import { CreateTopic } from "@/containers/topic/create-topic";
 import { TopicDetail } from "@/containers/topic/topic-detail";
-import { useGetTopics } from "@/hooks/use-topic";
+import { useGetTopics, useDeleteTopic } from "@/hooks/use-topic";
 import { Pagination } from "@/components/pagination";
 import { ITopic } from "@/services/topic";
+import { Delete } from "@/components/delete";
 
 export default function Topic() {
   const { topics, totalTopics, handleGetTopics, setTopics } = useGetTopics();
@@ -11,6 +12,13 @@ export default function Topic() {
     setTopics((old) => old.map((t) => (t.iD === topic.iD ? topic : t)));
     handleGetTopics();
   };
+  
+  const handleRemoveTopic = async (topic: ITopic) => {
+    setTopics((old) => old.filter((t) => t.iD !== topic.iD));
+    handleGetTopics();
+  };
+
+  const { handleDeleteTopic } = useDeleteTopic();
 
   return (
     <div>
@@ -28,8 +36,17 @@ export default function Topic() {
               <TopicDetail
                 key={topic.iD}
                 topic={topic}
+                removeTopic={handleRemoveTopic}
                 editTopic={handleEditTopic}
-              />
+              >
+                <>
+                  <Delete<ITopic>
+                    object={topic}
+                    refetch={handleGetTopics}
+                    handleDelete={handleDeleteTopic}
+                  />
+                </>
+              </TopicDetail>
             ))}
           </div>
         </div>

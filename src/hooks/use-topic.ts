@@ -1,4 +1,10 @@
-import { createTopic, getTopics, ITopic, updateTopic } from "@/services/topic";
+import {
+  createTopic,
+  getTopics,
+  ITopic,
+  updateTopic,
+  deleteTopic,
+} from "@/services/topic";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -59,4 +65,21 @@ export const useUpdateTopic = () => {
   };
 
   return { handleUpdateTopic };
+};
+
+export const useDeleteTopic = () => {
+  const handleDeleteTopic = async (id: number) => {
+    try {
+      await deleteTopic(id);
+      toast(`Topic deleted successfully`, {
+        position: "bottom-left",
+      });
+    } catch (error) {
+      toast.error(`Failed to delete topic: ${error}`, {
+        position: "bottom-left",
+      });
+    }
+  };
+
+  return { handleDeleteTopic };
 };
