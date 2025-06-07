@@ -1,9 +1,20 @@
 import { createMessage, IMessage } from "@/services/conversation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAllMessages } from "@/services/message";
 
-export const useMessage = () => {
+export const useMessage = (conversationId: number) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleGetMessages = async () => {
+    const res = await getAllMessages(conversationId)
+    setMessages(res.data.data)
+    return messages
+  }
+
+  useEffect(() => {
+    handleGetMessages()
+  }, [])
 
   const sendMessage = async (message: string, conversationId: number) => {
     try {

@@ -40,3 +40,7 @@ export const createMessage = async (
     conversationId,
   });
 };
+
+export const getAllConversation = async() => {
+  return axiosClient.get<{ data: IConversation[] }>("/conversation");
+};

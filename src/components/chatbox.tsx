@@ -18,7 +18,7 @@ type Prop = {
 export function ChatBox({ conversationId }: Prop) {
   const { handleSubmit } = useForm<ChatInput>();
   const [textInput, setTextInput] = useState("");
-  const { messages, sendMessage, isLoading } = useMessage();
+  const { messages, sendMessage, isLoading } = useMessage(conversationId);
 
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
