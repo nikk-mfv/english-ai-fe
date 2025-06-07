@@ -2,9 +2,15 @@ import { CreateTopic } from "@/containers/topic/create-topic";
 import { TopicDetail } from "@/containers/topic/topic-detail";
 import { useGetTopics } from "@/hooks/use-topic";
 import { Pagination } from "@/components/pagination";
+import { ITopic } from "@/services/topic";
 
 export default function Topic() {
-  const { topics, totalTopics, handleGetTopics } = useGetTopics();
+  const { topics, totalTopics, handleGetTopics, setTopics } = useGetTopics();
+
+  const handleEditTopic = async (topic: ITopic) => {
+    setTopics((old) => old.map((t) => (t.iD === topic.iD ? topic : t)));
+    handleGetTopics();
+  };
 
   return (
     <div>
@@ -19,7 +25,11 @@ export default function Topic() {
         <div className="w-full flex justify-center items-center">
           <div className="grid grid-cols-2 gap-4 m-4">
             {topics.map((topic) => (
-              <TopicDetail key={topic.iD} topic={topic} />
+              <TopicDetail
+                key={topic.iD}
+                topic={topic}
+                editTopic={handleEditTopic}
+              />
             ))}
           </div>
         </div>
