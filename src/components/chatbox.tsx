@@ -1,5 +1,5 @@
 import { MessageList } from "@/containers/conversation/message-list";
-import { useMessage } from "@/hooks/use-message";
+import { IMessage } from "@/services/conversation";
 import { Mic } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -12,25 +12,24 @@ interface ChatInput {
 }
 
 type Prop = {
-  conversationId: number;
+  isLoading: boolean;
+  messages: IMessage[];
+  sendMessage: (text: string) => Promise<string>
 };
 
-export function ChatBox({ conversationId }: Prop) {
+export function ChatBox({ sendMessage, isLoading, messages }: Prop) {
   const { handleSubmit } = useForm<ChatInput>();
   const [textInput, setTextInput] = useState("");
-  const { messages, sendMessage, isLoading } = useMessage(conversationId);
 
-  const { transcript, listening, browserSupportsSpeechRecognition } =
+  const { finalTranscript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
 
   useEffect(() => {
-    if (transcript) {
-      setTextInput(transcript);
-    }
-  }, [transcript]);
+    setTextInput(finalTranscript);
+  }, [finalTranscript]);
 
   const onSubmit: SubmitHandler<ChatInput> = async () => {
-    await sendMessage(textInput, conversationId);
+    await sendMessage(textInput);
     setTextInput('')
   };
 
