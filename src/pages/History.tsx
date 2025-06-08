@@ -20,7 +20,7 @@ export default function History() {
   if (!conversation || conversation.length === 0)
     return (
       <div className="text-center">
-        Chưa có lịch sử trò chuyện !!!
+        Have no history !!!
         <div>
           <button className="btn btn-primary" onClick={() => navigate("/")}>
             Create new
@@ -31,7 +31,7 @@ export default function History() {
 
   return (
     <div className="w-[700px] mx-auto">
-      <h2 className="text-2xl font-bold ">Lịch sử trò chuyện</h2>
+      <h2 className="text-2xl font-bold ">Conversation history</h2>
 
       <ul className="list bg-base-100 rounded-box shadow-md">
         {conversation.map((item, index) => (
