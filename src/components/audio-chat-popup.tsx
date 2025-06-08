@@ -8,10 +8,15 @@ type AudioChatPopupProp = {
   open: boolean;
   isLoading: boolean;
   onClose: () => void;
-  sendMessage: (text: string) => Promise<string>
+  sendMessage: (text: string) => Promise<string>;
 };
 
-const AudioChatPopup = ({ open = false, isLoading, onClose, sendMessage }: AudioChatPopupProp) => {
+const AudioChatPopup = ({
+  open = false,
+  isLoading,
+  onClose,
+  sendMessage,
+}: AudioChatPopupProp) => {
   const { user } = useAuth();
   const { finalTranscript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
@@ -50,7 +55,7 @@ const AudioChatPopup = ({ open = false, isLoading, onClose, sendMessage }: Audio
   }, [finalTranscript]);
 
   if (!open) return null;
-  
+
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser does not support speech recognition.</span>;
   }
@@ -109,15 +114,31 @@ const AudioChatPopup = ({ open = false, isLoading, onClose, sendMessage }: Audio
               You are in a calling...
             </span>
             <span className="loading loading-bars loading-lg text-primary"></span>
+            <button
+              type="button"
+              className={`btn btn-error btn-circle`}
+              aria-label="Stop speech"
+              onClick={() => window.speechSynthesis.cancel()}
+            >
+              {/* Heroicons solid stop icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <rect width="12" height="12" x="4" y="4" rx="2" />
+              </svg>
+            </button>
           </div>
           <div className="modal-action">
             <button
               className="btn btn-sm btn-error"
               onClick={() => {
-                resetTranscript()
+                resetTranscript();
                 SpeechRecognition.stopListening();
-                window.speechSynthesis.cancel()
-                
+                window.speechSynthesis.cancel();
+
                 onClose();
               }}
             >
