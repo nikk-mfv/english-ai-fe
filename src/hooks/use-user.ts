@@ -1,6 +1,5 @@
 import { createAccount, login, getUser } from "@/services/user";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
@@ -23,13 +22,6 @@ export const useCreateAccount = () => {
     } catch (error) {
       let errorMessage = "Failed to create your new account";
 
-      // check if the error is an Axios error
-      if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.error || error.message;
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
-      }
-
       toast.error(errorMessage, {
         position: "bottom-left",
       });
@@ -41,35 +33,23 @@ export const useCreateAccount = () => {
 export const useLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { handleGetUser } = useGetUser()
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const response = await login({ username: username, password: password });
+      const response = await login({ username, password });
 
       // Store the token in local storage
       localStorage.setItem("token", response.token);
-      console.log(response.user);
 
       toast(`Welcome back, ${username}`, {
         position: "bottom-left",
       });
-
-      setUsername("");
-      setPassword("");
+      await handleGetUser()
       navigate("/");
     } catch (error) {
-      console.error(error);
-      let errorMessage = "Failed to login";
-
-      // check if the error is an Axios error
-      if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.error || error.message;
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
-      }
-
-      toast.error(errorMessage, {
+      toast.error('User name or password is not correct !!!', {
         position: "bottom-left",
       });
     }
@@ -84,7 +64,6 @@ export const useGetUser = () => {
     try {
       const response = await getUser();
       setUser(response);
-      console.log(response);
     } catch (error) {
       console.error(error);
     }

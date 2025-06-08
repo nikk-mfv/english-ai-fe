@@ -1,7 +1,7 @@
 import { Toaster } from '@/components/ui/sonner';
 import './App.css';
 import { Header } from './components/header';
-import AppRoutes from './routes/AppRoutes';
+import AppRoutes from './routes/app-routes';
 import { Translation } from './components/translation';
 
 function App() {

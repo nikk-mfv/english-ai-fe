@@ -7,6 +7,7 @@ export type User = {
 
 export type AuthContextType = {
   user: User | null;
+  loading: boolean,
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   logout: () => void;
 };

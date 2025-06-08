@@ -1,10 +1,12 @@
 import { createMessage, IMessage } from "@/services/conversation";
 import { useEffect, useState } from "react";
 import { getAllMessages } from "@/services/message";
+import { useAuth } from "./use-auth";
 
 export const useMessage = (conversationId: number) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user } = useAuth()
 
   const handleGetMessages = async () => {
     const res = await getAllMessages(conversationId)
@@ -27,7 +29,7 @@ export const useMessage = (conversationId: number) => {
           message,
           isHuman: true,
           conversationId,
-          userId: 1, // TODO: handle after authenticate feature
+          userId: user?.userId || 0,
           createdAt: new Date()
         },
         {

@@ -5,7 +5,7 @@ export const useCreateConversation = () => {
   const [conversation, setConversation] = useState<IConversation | null>(null);
 
   const handleCreateConversation = async (
-    cv: Pick<IConversation, 'name' | 'userId'>
+    cv: Pick<IConversation, 'name'>
   ) => {
     const response = await createConversation(cv);
     setConversation(response.data.data);

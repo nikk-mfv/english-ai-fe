@@ -1,3 +1,4 @@
+import { useAuth } from "@/hooks/use-auth";
 import { useCreateConversation } from "@/hooks/use-conversation";
 import { MessageCircleMore } from "lucide-react";
 import { memo, useEffect, useState } from "react";
@@ -8,15 +9,13 @@ export const CreateConversation = memo(() => {
   const navigate = useNavigate();
   const { conversation, handleCreateConversation } = useCreateConversation();
   const [conversationName, setConversationName] = useState<string>('')
+  const { user } = useAuth()
 
   const submit = async (e: any) => {
     e.preventDefault(); // Prevent the form from reloading the page
     if (!conversationName || conversationName.length > 30) return
     try {
-      await handleCreateConversation({
-        name: conversationName,
-        userId: 1,
-      });
+      await handleCreateConversation({name: conversationName,});
       toast.success("Conversation created successfully", {
         description: "You can now start chatting with your new conversation",
         duration: 3000,

@@ -1,7 +1,7 @@
 import { validateUsername, validatePassword } from "@/lib/validator";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { useLogin, useGetUser } from "@/hooks/use-user";
+import { useLogin } from "@/hooks/use-user";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,7 +11,6 @@ export default function LoginPage() {
 
   const { username, setUsername, password, setPassword, handleLogin } =
     useLogin();
-  const { handleGetUser } = useGetUser();
 
   const handleSubmit = async () => {
     const usernameMsg = validateUsername(username);
@@ -23,7 +22,6 @@ export default function LoginPage() {
     const isValid = !usernameMsg && !passwordMsg;
     if (isValid) {
       await handleLogin();
-      await handleGetUser();
     }
   };
 
