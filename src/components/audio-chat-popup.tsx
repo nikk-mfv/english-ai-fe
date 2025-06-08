@@ -51,7 +51,6 @@ const AudioChatPopup = ({
 
   const handleClose = async () => {
     resetTranscript();
-    console.log(listening, "listening");
     if (listening) SpeechRecognition.stopListening();
     window.speechSynthesis.cancel();
 
