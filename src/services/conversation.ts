@@ -23,7 +23,7 @@ export interface IConversation {
 }
 
 export const createConversation = async (
-  conversation: Pick<IConversation, "name" | "userId">
+  conversation: Pick<IConversation, "name">
 ) => {
   return axiosClient.post<{ data: IConversation }>(
     "/conversation",
