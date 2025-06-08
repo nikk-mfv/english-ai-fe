@@ -18,7 +18,7 @@ export const useMessage = (conversationId: number) => {
     handleGetMessages()
   }, [])
 
-  const sendMessage = async (message: string, conversationId: number) => {
+  const sendMessage = async (message: string) => {
     try {
       setIsLoading(true)
       const res = await createMessage(message, conversationId);
@@ -38,6 +38,7 @@ export const useMessage = (conversationId: number) => {
       ];
 
       setMessages([...messages, ...newMessages]);
+      return res.data.data.message
     } catch (error) {
         throw new Error('error')
     } finally {
