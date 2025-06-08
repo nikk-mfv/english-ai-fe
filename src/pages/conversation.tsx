@@ -7,11 +7,15 @@ import { useParams } from "react-router-dom";
 export default function Conversation() {
   const { id } = useParams();
   const [openVoiceChat, setOpenVoiceChat] = useState<boolean>(false);
-  const {sendMessage, isLoading, messages} = useMessage(Number(id));
+  const { sendMessage, isLoading, messages } = useMessage(Number(id));
 
   return (
     <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min">
-      <ChatBox sendMessage={sendMessage} messages={messages} isLoading={isLoading} />
+      <ChatBox
+        sendMessage={sendMessage}
+        messages={messages}
+        isLoading={isLoading}
+      />
 
       <button
         className="btn btn-primary btn-circle btn-lg fixed bottom-2 right-[30%] z-50 shadow-lg animate-pulse transition-transform hover:scale-110"
@@ -33,15 +37,16 @@ export default function Conversation() {
           />
         </svg>
       </button>
-
-      <AudioChatPopup
-        open={openVoiceChat}
-        onClose={() => {
-          setOpenVoiceChat(false)
-        }}
-        isLoading={isLoading}
-        sendMessage={sendMessage}
-      />
+      {openVoiceChat && (
+        <AudioChatPopup
+          open={openVoiceChat}
+          onClose={() => {
+            setOpenVoiceChat(false);
+          }}
+          isLoading={isLoading}
+          sendMessage={sendMessage}
+        />
+      )}
     </div>
   );
 }

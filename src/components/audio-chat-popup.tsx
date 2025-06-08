@@ -59,11 +59,11 @@ const AudioChatPopup = ({
   };
 
   useEffect(() => {
-    if (!browserSupportsSpeechRecognition || isLoading || isSpeaking || !open)
+    if (!browserSupportsSpeechRecognition || isLoading || isSpeaking)
       return;
 
     SpeechRecognition.startListening({ continuous: false, language: "en-US" });
-  }, [browserSupportsSpeechRecognition, isLoading, isSpeaking, open]);
+  }, [browserSupportsSpeechRecognition, isLoading, isSpeaking]);
 
   useEffect(() => {
     handleSendMessage();
