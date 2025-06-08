@@ -12,7 +12,6 @@ type AudioChatPopupProp = {
 };
 
 const AudioChatPopup = ({ open = false, isLoading, onClose, sendMessage }: AudioChatPopupProp) => {
-  if (!open) return null;
   const { user } = useAuth();
   const { finalTranscript, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
@@ -50,6 +49,8 @@ const AudioChatPopup = ({ open = false, isLoading, onClose, sendMessage }: Audio
     handleSendMessage();
   }, [finalTranscript]);
 
+  if (!open) return null;
+  
   if (!browserSupportsSpeechRecognition) {
     return <span>Your browser does not support speech recognition.</span>;
   }
