@@ -36,7 +36,9 @@ export default function Conversation() {
 
       <AudioChatPopup
         open={openVoiceChat}
-        onClose={() => setOpenVoiceChat(false)}
+        onClose={() => {
+          setOpenVoiceChat(false)
+        }}
         isLoading={isLoading}
         sendMessage={sendMessage}
       />

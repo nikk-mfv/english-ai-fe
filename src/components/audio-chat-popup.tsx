@@ -18,8 +18,12 @@ const AudioChatPopup = ({
   sendMessage,
 }: AudioChatPopupProp) => {
   const { user } = useAuth();
-  const { finalTranscript, resetTranscript, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
+  const {
+    listening,
+    finalTranscript,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const handleSendMessage = async () => {
@@ -45,10 +49,21 @@ const AudioChatPopup = ({
     }
   };
 
+  const handleClose = async () => {
+    resetTranscript();
+    console.log(listening, "listening");
+    if (listening) SpeechRecognition.stopListening();
+    window.speechSynthesis.cancel();
+
+    onClose();
+  };
+
   useEffect(() => {
-    if (!browserSupportsSpeechRecognition || isLoading || isSpeaking) return;
-    SpeechRecognition.startListening({ continuous: true, language: "en-US" });
-  }, [browserSupportsSpeechRecognition, isLoading, isSpeaking]);
+    if (!browserSupportsSpeechRecognition || isLoading || isSpeaking || !open)
+      return;
+
+    SpeechRecognition.startListening({ continuous: false, language: "en-US" });
+  }, [browserSupportsSpeechRecognition, isLoading, isSpeaking, open]);
 
   useEffect(() => {
     handleSendMessage();
@@ -118,7 +133,10 @@ const AudioChatPopup = ({
               type="button"
               className={`btn btn-error btn-circle`}
               aria-label="Stop speech"
-              onClick={() => window.speechSynthesis.cancel()}
+              onClick={() => {
+                window.speechSynthesis.cancel();
+                setIsSpeaking(false);
+              }}
             >
               {/* Heroicons solid stop icon */}
               <svg
@@ -132,16 +150,7 @@ const AudioChatPopup = ({
             </button>
           </div>
           <div className="modal-action">
-            <button
-              className="btn btn-sm btn-error"
-              onClick={() => {
-                resetTranscript();
-                SpeechRecognition.stopListening();
-                window.speechSynthesis.cancel();
-
-                onClose();
-              }}
-            >
+            <button className="btn btn-sm btn-error" onClick={handleClose}>
               End calling
             </button>
           </div>
