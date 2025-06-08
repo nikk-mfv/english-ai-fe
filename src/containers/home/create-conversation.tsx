@@ -1,4 +1,3 @@
-import { useAuth } from "@/hooks/use-auth";
 import { useCreateConversation } from "@/hooks/use-conversation";
 import { MessageCircleMore } from "lucide-react";
 import { memo, useEffect, useState } from "react";
@@ -9,7 +8,6 @@ export const CreateConversation = memo(() => {
   const navigate = useNavigate();
   const { conversation, handleCreateConversation } = useCreateConversation();
   const [conversationName, setConversationName] = useState<string>('')
-  const { user } = useAuth()
 
   const submit = async (e: any) => {
     e.preventDefault(); // Prevent the form from reloading the page

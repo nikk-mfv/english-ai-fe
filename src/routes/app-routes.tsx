@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 
 import History from "@/pages/History";
-import Home from "@/pages/Home";
+import Home from "@/pages/home";
 import LogIn from "@/pages/LogIn";
 import SignUp from "@/pages/sign-up";
-import Topic from "@/pages/Topic";
-import Vocabulary from "@/pages/Vocabulary";
+import Topic from "@/pages/topic";
+import Vocabulary from "@/pages/vocabulary";
 import Conversation from "@/pages/conversation";
 import ProtectedRoute from "./protected-route";
 
