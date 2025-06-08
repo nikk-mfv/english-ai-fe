@@ -3,7 +3,7 @@ import { IVocabulary } from "@/services/vocab";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { useGetTopics } from "@/hooks/use-topic";
-import { MultiSelect } from "@/components/ui/multiSelect";
+import { MultiSelect } from "@/components/ui/multi-select";
 import axios from "axios";
 
 export function CreateVocabPopover({

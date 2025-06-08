@@ -1,10 +1,11 @@
 import { useState, ReactNode, useEffect } from "react";
-import { AuthContext, User } from "./AuthContext";
+import { AuthContext, User } from "./auth-context";
 import { getUser } from "@/services/user";
 import { toast } from "sonner";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const logout = () => {
     setUser(null);
@@ -17,8 +18,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       setUser(null);
+      setLoading(false);
       return;
     }
 
@@ -29,6 +32,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         logout();
         toast.error("Session expired. Please log in again." + error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -36,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
+    <AuthContext.Provider value={{ user, loading, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-function History() {
+export default function History() {
   const [conversation, setConversation] = useState<IConversation[]>([]);
 
   const navigate = useNavigate()
@@ -42,5 +42,3 @@ function History() {
     </div>
   );
 }
-
-export default History;

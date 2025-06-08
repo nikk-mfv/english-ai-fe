@@ -45,15 +45,9 @@ export const useGetVocabulary = () => {
   const [totalPages, setTotalPages] = useState(0);
 
   const handleGetVocabulary = async (page?: number) => {
-    try {
-      const response = await getVocabulary(page || 1);
-      setVocabulary(response.data || []);
-      setTotalPages(response.paging.total);
-    } catch (error) {
-      toast.error(`Failed to get vocabulary: ${error}`, {
-        position: "bottom-left",
-      });
-    }
+    const response = await getVocabulary(page || 1);
+    setVocabulary(response.data || []);
+    setTotalPages(response.paging.total);
   };
 
   useEffect(() => {

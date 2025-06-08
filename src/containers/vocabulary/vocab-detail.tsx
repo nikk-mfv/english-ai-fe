@@ -5,7 +5,7 @@ import {
 } from "@/hooks/use-vocabulary";
 import { IVocabulary } from "@/services/vocab";
 import { useState, useEffect } from "react";
-import { MultiSelect } from "@/components/ui/multiSelect";
+import { MultiSelect } from "@/components/ui/multi-select";
 import { useGetTopics } from "@/hooks/use-topic";
 
 type VocabularyProps = {
