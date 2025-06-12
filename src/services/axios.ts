@@ -5,7 +5,7 @@ export function toArray<T>(t?: T | T[]): T[] {
   return Array.isArray(t) ? t : t ? [t] : [];
 }
 
-const baseURL = "http://localhost:8080/api/v1";
+const baseURL = `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}/api/v1`;
 const defaultConfig: AxiosRequestConfig = {
   timeout: 60000,
   withCredentials: true,
