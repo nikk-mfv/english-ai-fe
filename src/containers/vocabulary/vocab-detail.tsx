@@ -58,6 +58,7 @@ export function VocabDetail({
     await handleUpdateVocabulary(vocabulary.iD, updatedVocab);
     setIsEditing(false);
     editVocabulary(updatedVocab);
+    setNewVocabulary(updatedVocab);
   };
 
   const handleRemoveVocabulary = async () => {
