@@ -33,12 +33,12 @@ function Vocabulary() {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="flex flex-col gap-4 mx-auto max-w-4xl p-4">
-      <h1 className="text-2xl font-bold text-center">Your vocabulary</h1>
+    <div className="flex flex-col mx-auto max-w-4xl p-4">
+      <h1 className="text-2xl font-bold text-center">Create your new vocabulary</h1>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-6">
         <button className="btn" onClick={openModal}>
-          Add Vocabulary
+          Create
         </button>
       </div>
 
@@ -50,11 +50,11 @@ function Vocabulary() {
           closeModal={closeModal}
         />
       )}
-
+    <h1 className="text-2xl font-bold mt-6 text-center">Vocabulary List</h1>
       {vocabulary.length === 0 ? (
         <div className="flex flex-col gap-4">
           <p className="text-muted-foreground text-center">
-            No vocabulary found
+            No vocabulary has found
           </p>
         </div>
       ) : (

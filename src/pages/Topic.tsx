@@ -26,8 +26,10 @@ export default function Topic() {
 
       <h1 className="text-2xl font-bold mt-10 text-center">Topic List</h1>
       {topics.length === 0 ? (
-        <div className="text-xl font-semibold m-4 text-center">
-          No topic has found
+        <div className="flex flex-col gap-4">
+          <p className="text-muted-foreground text-center">
+            No topic has found
+          </p>
         </div>
       ) : (
         <div className="w-full flex justify-center items-center">

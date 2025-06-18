@@ -19,12 +19,22 @@ export default function History() {
 
   if (!conversation || conversation.length === 0)
     return (
-      <div className="text-center">
-        Have no history !!!
+      <div>
         <div>
-          <button className="btn btn-primary" onClick={() => navigate("/")}>
-            Create new
-          </button>
+          <div className="flex flex-col items-center justify-center p-4">
+            <h1 className="text-2xl font-bold">Create your new conversation</h1>
+            <div className="max-w-sx mb-5">
+              <button className="btn w-full mt-5" onClick={() => navigate("/")}>
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+        <h1 className="text-2xl font-bold text-center">History List</h1>
+        <div className="flex flex-col gap-4">
+          <p className="text-muted-foreground text-center">
+            No history has found
+          </p>
         </div>
       </div>
     );
