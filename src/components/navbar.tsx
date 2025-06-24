@@ -9,6 +9,8 @@ import { LogOut } from "lucide-react";
 import Avatar from "react-avatar";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
+import { useRef } from "react";
+import { useUploadAvatar } from "@/hooks/use-user";
 
 export function NavBar() {
   const { user, logout } = useAuth();
@@ -20,8 +22,41 @@ export function NavBar() {
     navigate("/");
   };
 
+  const { handleUploadAvatar } = useUploadAvatar();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+ 
+  const s3_domain = import.meta.env.VITE_S3_DOMAIN;
+
+  const handleUpdateAvatar = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      console.log("Click update avatar");
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("File input changed");
+    const file = e.target.files?.[0];
+    console.log("Selected file:", file);
+    if (file) {
+      handleUploadAvatar(file);
+    }
+  };
+
+
   return (
     <div>
+      {user && (
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".png,.jpg,.jpeg,.gif"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+      )}
       {!user ? (
         <>
           <div className="absolute top-0 right-0 p-4 flex gap-1">
@@ -52,6 +87,7 @@ export function NavBar() {
                 <Avatar
                   className="hover:cursor-pointer"
                   name={user?.username || ""}
+                  src={s3_domain +"/"+ user?.imageUrl || ""}
                   size="40"
                   round={true}
                 />
@@ -61,6 +97,9 @@ export function NavBar() {
                 align="start"
                 sideOffset={4}
               >
+                <DropdownMenuItem onClick={handleUpdateAvatar}>
+                  Update avatar
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut />
                   Log out

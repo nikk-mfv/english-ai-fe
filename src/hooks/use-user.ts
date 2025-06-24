@@ -1,4 +1,4 @@
-import { createAccount, login, getUser } from "@/services/user";
+import { createAccount, login, getUser, uploadAvatar } from "@/services/user";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,8 +19,8 @@ export const useCreateAccount = () => {
       setUsername("");
       setPassword("");
       navigate("/log-in");
-    } catch (error) {
-      let errorMessage = "Failed to create your new account";
+    } catch {
+      const errorMessage = "Failed to create your new account";
 
       toast.error(errorMessage, {
         position: "bottom-left",
@@ -33,7 +33,7 @@ export const useCreateAccount = () => {
 export const useLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { handleGetUser } = useGetUser()
+  const { handleGetUser } = useGetUser();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -46,10 +46,10 @@ export const useLogin = () => {
       toast(`Welcome back, ${username}`, {
         position: "bottom-left",
       });
-      await handleGetUser()
+      await handleGetUser();
       navigate("/");
-    } catch (error) {
-      toast.error('User name or password is not correct !!!', {
+    } catch {
+      toast.error("User name or password is not correct !!!", {
         position: "bottom-left",
       });
     }
@@ -69,5 +69,30 @@ export const useGetUser = () => {
     }
   };
 
-  return { handleGetUser };
+  return { setUser, handleGetUser };
+};
+
+export const useUploadAvatar = () => {
+
+  const { handleGetUser } = useGetUser();
+  const handleUploadAvatar = async (file: File) => {
+   
+ console.log("Uploading avatar:", file);
+     try {
+      const res = await uploadAvatar(file);
+      console.log("Upload result: ", res); 
+      
+      toast.success("Avatar uploaded successfully", {
+        position: "bottom-left",
+      });
+
+      await handleGetUser(); // Refresh user data after upload
+    } catch {
+      toast.error("Failed to upload avatar", {
+        position: "bottom-left",
+      });
+    }
+  };
+
+  return { handleUploadAvatar };
 };

@@ -3,6 +3,7 @@ import { createContext } from "react";
 export type User = {
   userId: number;
   username: string;
+  imageUrl?: string;
 };
 
 export type AuthContextType = {

@@ -4,6 +4,7 @@ export interface IUser {
   iD: number;
   username: string;
   password: string;
+  imageUrl?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -31,3 +32,22 @@ export const getUser = async () => {
   });
   return res.data;
 };
+
+export const uploadAvatar = async (file: File) => {
+  const formData = new FormData();
+  formData.append("avatar", file);
+  
+  formData.forEach((value, key) => {
+    console.log("FormData:", key, value);
+  });
+
+  // Get the token from local storage
+  const token = localStorage.getItem("token");
+
+  const res = await axiosClient.post("/user/upload-avatar", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+}
